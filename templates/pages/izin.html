@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %} Settings Shift {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+        <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+        <li class="breadcrumb-item"><a href="#">Dashboards</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Kelola Izin</li>
+    </ol>
+</nav>
+{% endblock breadcrumb %}
+
+{% block content %}
+<!-- Header -->
+<div class="header bg-primary pb-8">
+    <div class="container-fluid">
+        <div class="header-body">
+
+        </div>
+    </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card" id="pegawaiItems">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8 col-md-6 mb-4">
+                            <h2 class="mb-0">Kelola Izin Pegawai</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <!-- Projects table -->
+                    <table id="izin" class="table align-items-center table-flush" style="width:100%">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>#</th>
+                                <th>NIP/NIK</th>
+                                <th>NAMA</th>
+                                <th>JABATAN</th>
+                                <th>Opsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in data %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ item.nip }}</td>
+                                <td>{{ item.nama }}</td>
+                                <td>{{ item.jabatan }}</td>
+                                <td>
+                                    <a href="{% url 'presensi' item.id 'hadir' %}" class="btn btn-primary"><i class="fas fa-user-check"></i> Masuk</a>
+                                    <a href="{% url 'presensi' item.id 'izin' %}" class="btn btn-info"><i class="fas fa-envelope"></i> Izin</a>
+                                    <a href="{% url 'presensi' item.id 'alfa' %}" class="btn btn-danger"><i class="fas fa-user-minus"></i> Absen</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+<!-- DataTables -->
+<script src="/static/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.2.1/js/dataTables.fixedHeader.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="/static/vendor/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+<script src="/static/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script>
+  $(function () {
+      $('#izin').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": true,
+          "ordering": false,
+          "info": true,
+          "autoWidth": false,
+          "responsive": false,
+      });
+  });
+  $.extend(true, $.fn.dataTable.defaults.oLanguage.oPaginate, {
+    sNext: '<i class="fa fa-chevron-right" ></i>',
+    sPrevious: '<i class="fa fa-chevron-left" ></i>'
+  });
+</script>
+{% endblock javascripts %}

@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+
+{% block title %} Dashboard {% endblock title %}
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+        <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Home</li>
+    </ol>
+</nav>
+{% endblock breadcrumb %}
+
+{% block content %}
+<!-- Header -->
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row py-4">
+                <div class="col-xl-3 col-md-6">
+                    <div class="card card-stats">
+                        <div class="card-body">
+                            <div class="row mb-2 mt-2">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Jumlah Pegawai</h5>
+                                    <span class="h1 font-weight-bold mb-0">{{ pegawai | default:0 }}</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                                        <i class="fa fa-users"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card card-stats">
+                        <!-- Card body -->
+                        <div class="card-body">
+                            <div class="row mb-2 mt-2">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Pegawai Hadir</h5>
+                                    <span class="h1 font-weight-bold mb-0">{{ hadir | default:0 }}</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div
+                                        class="icon icon-shape bg-gradient-green bg-gradient-orange text-white rounded-circle shadow">
+                                        <i class="fa fa-user-check"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card card-stats">
+                        <!-- Card body -->
+                        <div class="card-body">
+                            <div class="row mb-2 mt-2">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Pegawai Tidak Hadir</h5>
+                                    <span class="h1 font-weight-bold mb-0">{{ absen | default:0 }}</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
+                                        <i class="fa fa-user-times"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card card-stats">
+                        <!-- Card body -->
+                        <div class="card-body">
+                            <div class="row mb-2 mt-2">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Pegawai Izin</h5>
+                                    <span class="h1 font-weight-bold mb-0">{{ izin | default:0 }}</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                        <i class="fa fa-envelope"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col-xl-8">
+            <div class="card" id="orderItems">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">Presensi Terbaru</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <!-- Projects table -->
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">NIP</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Jabatan</th>
+                                <th scope="col">Jam Datang</th>
+                                <th scope="col">Jam Pulang</th>
+                                <th scope="col">Suhu</th>
+                                <th scope="col">Keterangan</th>
+                            </tr>
+                        </thead>
+                        {% if data %}
+                        <tbody>
+                            {% for item in data %}
+                            <tr>
+                                <th>{{ item.pegawai.nip }}</th>
+                                <td>{{ item.pegawai.nama }}</td>
+                                <td>{{ item.pegawai.jabatan }}</td>
+                                <td>{{ item.masuk | date:'H:i' }}</td>
+                                <td>{{ item.pulang | date:'H:i' }}</td>
+                                <td>{{ item.suhu }}</td>
+                                <td>{{ item.keterangan }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        {% endif %}
+                    </table>
+                    {% if orders %}
+                    {{ orders.pagination }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col text-center">
+                            <h3 class="mb-0">Informasi Model Wajah</h3>
+                        </div>
+                    </div>
+                </div>
+                {% if model %}
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <tbody>
+                            <tr>
+                                <th scope="row">File Model :</th>
+                                <td>{{model.nama}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Total Pegawai :</th>
+                                <td>{{model.total}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Terakhir diperbarui :</th>
+                                <td>{{model.updated | date:'j M o'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="card-body m-auto">
+                    <p>Tidak ada model dalam database</p>
+                </div>
+                {% endif %}
+                <div class="card-body m-auto">
+                    <a href="/train"><button class="btn btn-icon btn-primary" type="button">{% if model %} Update Model {% else %} Train Model {% endif %}</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

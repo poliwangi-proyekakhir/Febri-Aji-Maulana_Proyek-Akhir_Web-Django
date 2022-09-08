@@ -1,0 +1,16 @@
+{% extends 'basis.html' %}
+
+{% block title %}
+Dashboard
+{% endblock title %}
+
+{% block content %}
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="id_foto">Foto Wajah:</label>
+    <input type="file" name="foto" class="form-control" id="id_foto" required>
+    <input type="submit">
+</form>
+
+{% endblock content %}
+

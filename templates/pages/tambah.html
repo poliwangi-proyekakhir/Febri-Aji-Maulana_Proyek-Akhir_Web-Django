@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Tambah Data Pegawai {% endblock title %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+        <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Tambah Pegawai</li>
+    </ol>
+</nav>
+{% endblock breadcrumb %}
+
+{% block content %}
+<!-- Header -->
+<div class="header bg-primary pb-8">
+    <div class="container-fluid">
+        <div class="header-body">
+
+        </div>
+    </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h2 class="mb-0">Tambah Pegawai</h2>
+                        </div>                        
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group mb-4">
+                            {{ form.nip.label_tag}}
+                            {{ form.nip}}
+                        </div>
+                        <div class="form-group mb-4">
+                            {{ form.nama.label_tag}}
+                            {{ form.nama}}
+                        </div>
+                        <div class="form-group mb-4">
+                            {{ form.nohp.label_tag}}
+                            {{ form.nohp}}
+                        </div>
+                        <div class="form-group mb-4 row">
+                            <div class="col">
+                                {{ form.jabatan.label_tag}}
+                                {{ form.jabatan}}
+                            </div>
+                            <div class="col">
+                                {{ form.shift.label_tag}}
+                                {{ form.shift}}
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            {{ form.foto.label_tag}}
+                            {{ form.foto}}
+                        </div>
+                        <button type="submit" class="btn btn-block btn-primary save-form">
+                            {% if form.instance.id %}Update{% else %}Create{% endif %}
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 col-12 mb-3">
+                                <div class="form-group">
+                                    <label for="nip">NIP/NIK</label>
+                                    <input type="text" class="form-control" id="nip" name="nip" placeholder="Masukkan NIP/NIK">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12 mb-3">
+                                <div class="form-group">
+                                    <label for="nama">Nama</label>
+                                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-12 mb-3">
+                                <div class="form-group">
+                                    <label for="alamat">Alamat</label>
+                                    <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Masukkan Alamat">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12 mb-3">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan email">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12 mb-3">
+                                <div class="form-group">
+                                    <label for="nohp">No Handphone</label>
+                                    <input type="number" class="form-control" id="nohp" name="nohp" placeholder="Masukkan No Handphone">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-12 mb-3">
+                                <div class="form-group">
+                                    <label>Jenis Kelamin</label>
+                                    <select class="form-control" id="jk" name="jk">
+                                        <option>L</option>
+                                        <option>P</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12 mb-3">
+                                <div class="form-group">
+                                    <label>Jabatan</label>
+                                    <select class="form-control" id="jabatan" name="jabatan">
+                                        <option>Dosen</option>
+                                        <option>KA. Prodi TI</option>
+                                        <option>KA. Lab TI</option>
+                                        <option>Sekjur TI</option>
+                                        <option>Kajur TI</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card border-0 shadow mb-4">
+                            <div class="card-header">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h2 class="fs-5 fw-bold mb-0">Foto Wajah</h2>
+                                    </div>
+                                    <div class="col text-end">
+                                        <a href="/tambahdata" class="btn btn-sm btn-primary"><i class="fas fa-upload"></i> Upload</a>
+                                        <a href="/tambahdata" class="btn btn-sm btn-primary"><i class="fas fa-camera"></i> Capture</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <input type="file" name="foto" accept=".png,.jpg,.jpeg" id="foto">
+                                <div class="table table-striped files">
+                                    <div class="row mt-6" id="previews">
+                                        <div id="template" class="col mt-4">
+                                            {% comment %} <span class="preview"><img src="data:," alt="" data-dz-thumbnail /></span> {% endcomment %}
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form> -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'plugins/dropzone/min/dropzone.min.css' %}">
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'plugins/dropzone/min/dropzone.min.js' %}"></script>
+<script src="{% static 'plugins/ekko-lightbox/ekko-lightbox.min.js' %}"></script>
+<script>
+    Dropzone.autoDiscover = false
+    var previewNode = document.querySelector("#template")
+    previewNode.id = ""
+    var previewTemplate = previewNode.parentNode.innerHTML
+    previewNode.parentNode.removeChild(previewNode)
+
+    var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+        url: "/target-url", // Set the url
+        thumbnailWidth: 200,
+        thumbnailHeight: 200,
+        parallelUploads: 10,
+        previewTemplate: previewTemplate,
+        autoQueue: false, // Make sure the files aren't queued until manually added
+        previewsContainer: "#previews", // Define the container to display the previews
+        clickable: ".fileinput-button"
+    })
+
+    // DropzoneJS Demo Code End
+    $(function () {
+        $(document).on('click', '[data-toggle="lightbox"]', function (event) {
+            event.preventDefault();
+            $(this).ekkoLightbox({
+                alwaysShowClose: true
+            });
+        });
+
+        $('.btn[data-filter]').on('click', function () {
+            $('.btn[data-filter]').removeClass('active');
+            $(this).addClass('active');
+        });
+    })
+</script>
+{% endblock%}

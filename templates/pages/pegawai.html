@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %} Settings Shift {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+        <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+        <li class="breadcrumb-item"><a href="#">Dashboards</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Data Pegawai</li>
+    </ol>
+</nav>
+{% endblock breadcrumb %}
+
+{% block content %}
+<!-- Header -->
+<div class="header bg-primary pb-8">
+    <div class="container-fluid">
+        <div class="header-body">
+
+        </div>
+    </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card" id="pegawaiItems">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h2 class="mb-0">Data Pegawai</h2>
+                        </div>
+                        <div class="col text-right">
+                            <a href="/tambah">
+                                <button class="btn btn-icon btn-primary" type="button">
+                                    <span class="btn-inner--icon"><i class="fa fa-user-plus"></i></span>
+                                    <span class="btn-inner--text">Tambah Data</span>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <!-- Projects table -->
+                    <table id="pegawai" class="table align-items-center table-flush" style="width:100%">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>#</th>
+                                <th>NIP/NIK</th>
+                                <th>NAMA</th>
+                                <th>JABATAN</th>
+                                <th>NO HP</th>
+                                <th>SHIFT</th>
+                                <th>Opsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in data %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ item.nip }}</td>
+                                <td>{{item.nama}}</td>
+                                <td>{{item.jabatan}}</td>
+                                <td>{{item.nohp}}</td>
+                                <td>{{item.shift}}</td>
+                                <td>
+                                    <a href="{% url 'pegawai' item.id %}" class="btn btn-icon get-form"><i class="fas fa-edit"></i></a>
+                                    <a href="{% url 'pegawai' item.id %}" class="btn btn-icon del-form"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+<!-- DataTables -->
+<script src="/static/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.2.1/js/dataTables.fixedHeader.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="/static/vendor/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+<script src="/static/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script>
+  $(function () {
+      $('#pegawai').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": true,
+          "ordering": false,
+          "info": true,
+          "autoWidth": false,
+          "responsive": false,
+      });
+  });
+  $.extend(true, $.fn.dataTable.defaults.oLanguage.oPaginate, {
+    sNext: '<i class="fa fa-chevron-right" ></i>',
+    sPrevious: '<i class="fa fa-chevron-left" ></i>'
+  });
+</script>
+{% endblock javascripts %}

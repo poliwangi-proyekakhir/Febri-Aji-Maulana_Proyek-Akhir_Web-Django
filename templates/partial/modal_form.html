@@ -1,0 +1,58 @@
+<div class="modal-body p-0">
+    <div class="card p-4">
+        <button type="button" class="close ml-auto" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="card-header border-0 text-center pb-0">
+            <h2 class="mb-0">
+                {% if form.instance.id %} Ubah Data {% else %} Tambah Data {% endif %}
+            </h2>
+        </div>
+        <div class="card-body">
+            {% if data != 'pegawai' %}
+            <!-- Form -->
+            <form method="{% if form.instance.id %}PUT{% else %}POST{% endif %}" action="{% if form.instance.id %}{% url data form.instance.id %}{% else %}{% url data %}{% endif %}">
+                {% for field in form %}
+                    <div class="form-group mb-4">
+                        {{ field.label_tag }}{{ field }}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-block btn-primary save-form">
+                    {% if form.instance.id %}Update{% else %}Create{% endif %}
+                </button>
+            </form>
+            {% else %}
+            <form method="{% if form.instance.id %}PUT{% else %}POST{% endif %}" action="{% if form.instance.id %}{% url data form.instance.id %}{% else %}{% url data %}{% endif %}">
+                <div class="form-group mb-4">
+                    {{ form.nip.label_tag}}
+                    {{ form.nip}}
+                </div>
+                <div class="form-group mb-4">
+                    {{ form.nama.label_tag}}
+                    {{ form.nama}}
+                </div>
+                <div class="form-group mb-4">
+                    {{ form.nohp.label_tag}}
+                    {{ form.nohp}}
+                </div>
+                <div class="form-group mb-4">
+                    {{ form.jabatan.label_tag}}
+                    {{ form.jabatan}}
+                </div>
+                <div class="form-group mb-4">
+                    {{ form.shift.label_tag}}
+                    {{ form.shift}}
+                </div>
+                <div class="form-group mb-4">
+                    {{ form.foto.label_tag}}
+                    <br>
+                    {{ form.foto}}
+                </div>
+                <button type="submit" class="btn btn-block btn-primary save-form">
+                    {% if form.instance.id %}Update{% else %}Create{% endif %}
+                </button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
